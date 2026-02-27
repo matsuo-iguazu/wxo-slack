@@ -42,7 +42,7 @@ vi .env
 ファイルのコメントに従い、各値を入力してください。
 
 - `INSTANCE_URL`：wxO UIのサービス・インスタンスURLをそのままコピーして設定
-- `ENVIRONMENT_ID`：Draftの場合は空のままにする（`register.sh` が自動取得）。Liveの場合は `agentEnvironmentId` を設定
+- `ENVIRONMENT_ID`：Draftの場合は空のままにする（`register.sh` が自動取得）。Liveの場合は入力
 - `BASE_URL`：編集不要（`INSTANCE_URL` から自動設定）
 
 ### 2. 設定を確認する
