@@ -1,8 +1,12 @@
 #!/bin/bash
-source ./step1_set_env.sh
+source ./.env
 
-echo ""
-echo "=== Step2: 各IDを取得します ==="
+echo "=== 設定確認 ==="
+echo "IBM_API_KEY    : ${IBM_API_KEY:0:10}..."
+echo "INSTANCE_URL   : ${INSTANCE_URL}"
+echo "AGENT_ID       : ${AGENT_ID}"
+echo "ENVIRONMENT_ID : ${ENVIRONMENT_ID:-（未設定 → 自動取得）}"
+echo "SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:0:15}..."
 
 echo ""
 echo "--- IBM Token ---"
@@ -22,7 +26,7 @@ export SLACK_TEAM_ID=$(curl -s --request GET \
 echo "SLACK_TEAM_ID: ${SLACK_TEAM_ID}"
 
 echo ""
-echo "--- Environment ID（DraftのみStep2で自動取得） ---"
+echo "--- Environment ID（Draftのみ自動取得） ---"
 if [ -z "${ENVIRONMENT_ID}" ]; then
   export ENVIRONMENT_ID=$(curl -s --request GET \
     --url "${BASE_URL}/agents/${AGENT_ID}" \
@@ -30,7 +34,7 @@ if [ -z "${ENVIRONMENT_ID}" ]; then
     | python3 -c "import sys,json; data=json.load(sys.stdin); print(next(e['id'] for e in data['environments'] if e['name']=='draft'))")
   echo "ENVIRONMENT_ID: ${ENVIRONMENT_ID} （自動取得）"
 else
-  echo "ENVIRONMENT_ID: ${ENVIRONMENT_ID} （Step1で設定済み）"
+  echo "ENVIRONMENT_ID: ${ENVIRONMENT_ID} （.envで設定済み）"
 fi
 
 echo ""
@@ -42,4 +46,4 @@ export CHANNEL_ID=$(curl -s --request GET \
 echo "CHANNEL_ID: ${CHANNEL_ID}"
 
 echo ""
-echo "=== Step2完了 ==="
+echo "=== 確認完了 ==="

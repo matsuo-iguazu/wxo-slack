@@ -1,8 +1,8 @@
 #!/bin/bash
-source ./step2_get_ids.sh
+source ./check.sh
 
 echo ""
-echo "=== Step3: bot_access_tokenを登録します ==="
+echo "=== bot_access_tokenを登録します ==="
 echo "CHANNEL_ID   : ${CHANNEL_ID}"
 echo "SLACK_TEAM_ID: ${SLACK_TEAM_ID}"
 
@@ -14,7 +14,7 @@ curl -s --request PATCH \
   | python3 -m json.tool
 
 echo ""
-echo "=== Step3: 設定を確認します ==="
+echo "=== 設定を確認します ==="
 curl -s --request GET \
   --url "${BASE_URL}/agents/${AGENT_ID}/environments/${ENVIRONMENT_ID}/channels/slack/${CHANNEL_ID}" \
   --header "Authorization: Bearer ${TOKEN}" \

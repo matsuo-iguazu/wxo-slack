@@ -1,3 +1,5 @@
-# 認証情報ファイル（step1_set_env.shに値を入力したらgit管理外に移動してください）
-# 例: cp step1_set_env.sh step1_set_env.local.sh → step1_set_env.local.sh を使う場合
-step1_set_env.local.sh
+# 認証情報ファイル（.env.sampleをコピーして使用してください）
+.env
+
+# Claude Code用メモ（ローカルのみ）
+CLAUDE.md
