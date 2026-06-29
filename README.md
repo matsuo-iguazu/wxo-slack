@@ -10,7 +10,7 @@ watsonx Orchestrate（以下wxO）のエージェントをSlackチャンネル�
 
 ## 前提条件
 
-- IBM Cloudアカウントおよびwatsonx Orchestrateインスタンスへのアクセス権
+- watsonx OrchestrateインスタンスへのAPIアクセス権（IBM Cloud / AWS どちらの環境にも対応）
 - Slackワークスペースの管理者権限
 - WSL2（Ubuntu）またはLinux/Mac環境（curl・python3が使えること）
 
@@ -22,8 +22,8 @@ watsonx Orchestrate（以下wxO）のエージェントをSlackチャンネル�
 
 | 項目 | 取得場所 |
 |------|---------|
-| IBM Cloud APIキー | IBM Cloud → 管理 → アクセス → APIキー |
-| サービス・インスタンスURL | wxO UI → 設定 → APIの詳細 → サービス・インスタンスURL（例：`https://api.us-south.watson-orchestrate.cloud.ibm.com/instances/{instance-id}`） |
+| wxO APIキー | **IBM Cloud：** 管理 → アクセス → APIキー<br>**AWS：** wxO UI → 設定 → APIの詳細 → Generate API key |
+| サービス・インスタンスURL | wxO UI → 設定 → APIの詳細 → サービス・インスタンスURL<br>IBM Cloud 例：`https://api.us-south.watson-orchestrate.cloud.ibm.com/instances/{instance-id}`<br>AWS 例：`https://api.ap-southeast-1.dl.watson-orchestrate.ibm.com/instances/{instance-id}` |
 | AGENT_ID | wxO UI → 対象エージェント → チャネル → 組み込みエージェント → Webサイトに埋め込む → サンプルembedコード内の `agentId` |
 | ENVIRONMENT_ID | 同上の `agentEnvironmentId`（**Liveのみ**。Draftは不要） |
 | Bot Token（xoxb-...） | api.slack.com → アプリ → OAuth & Permissions → Bot User OAuth Token |
@@ -56,7 +56,7 @@ chmod +x check.sh
 
 | 表示項目 | 内容 |
 |----------|------|
-| TOKEN | IBM Cloud認証トークン |
+| TOKEN | 認証トークン（IBM Cloud IAM / AWS MCSP を自動判定） |
 | SLACK_TEAM_ID | SlackワークスペースID |
 | ENVIRONMENT_ID | 環境ID（DraftはAPI経由で自動取得） |
 | CHANNEL_ID | wxO上のSlackチャンネルID |
@@ -80,7 +80,7 @@ chmod +x register.sh
 |------|------------|
 | `channels: []` と表示される | ウィザードでチャンネルが作成されていない |
 | `Not Found` エラー | `INSTANCE_URL` / `AGENT_ID` が正しいか確認 |
-| `Unauthorized` エラー | `IBM_API_KEY` が正しいか、またはTOKENの有効期限切れ（`check.sh` を再実行） |
+| `Unauthorized` エラー | `WXO_API_KEY` が正しいか、またはTOKENの有効期限切れ（`check.sh` を再実行） |
 | ENVIRONMENT_IDが取得できない | Draftの場合、エージェントにSlackチャネル定義が存在するか確認 |
 | Slackで返答が来ない | `register.sh` のPATCHが成功しているか確認 |
 | LangFuseにエントリが来ない | bot_access_tokenが未登録の可能性あり（`register.sh` を再実行） |

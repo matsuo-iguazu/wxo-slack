@@ -2,19 +2,30 @@
 source ./.env
 
 echo "=== 設定確認 ==="
-echo "IBM_API_KEY    : ${IBM_API_KEY:0:10}..."
+echo "WXO_API_KEY    : ${WXO_API_KEY:0:10}..."
 echo "INSTANCE_URL   : ${INSTANCE_URL}"
 echo "AGENT_ID       : ${AGENT_ID}"
 echo "ENVIRONMENT_ID : ${ENVIRONMENT_ID:-（未設定 → 自動取得）}"
 echo "SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:0:15}..."
 
 echo ""
-echo "--- IBM Token ---"
-export TOKEN=$(curl -s -X POST \
-  "https://iam.cloud.ibm.com/identity/token" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${IBM_API_KEY}" \
-  | python3 -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
+echo "--- Token ---"
+if echo "${INSTANCE_URL}" | grep -q "watson-orchestrate.cloud.ibm.com"; then
+  export TOKEN=$(curl -s -X POST \
+    "https://iam.cloud.ibm.com/identity/token" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${WXO_API_KEY}" \
+    | python3 -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
+  echo "(IBM Cloud IAM)"
+else
+  export TOKEN=$(curl -s -X POST \
+    "https://iam.platform.saas.ibm.com/siusermgr/api/1.0/apikeys/token" \
+    -H "Content-Type: application/json" \
+    -H "accept: application/json" \
+    -d "{\"apikey\": \"${WXO_API_KEY}\"}" \
+    | python3 -c "import sys,json; print(json.load(sys.stdin)['token'])")
+  echo "(AWS MCSP)"
+fi
 echo "TOKEN: ${TOKEN:0:20}..."
 
 echo ""
