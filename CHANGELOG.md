@@ -1,5 +1,16 @@
 # 変更履歴
 
+## 2026-07-16
+
+### AWS MCSP 認証を V2 エンドポイントに更新
+
+- AWS 版のトークン取得エンドポイントを MCSP V1（サンセット済み）から V2 に変更
+  - 変更前: `iam.platform.saas.ibm.com/siusermgr/api/1.0/apikeys/token`
+  - 変更後: `account-iam.platform.saas.ibm.com/api/2.0/apikeys/token`
+- IBM Cloud 側（`iam.cloud.ibm.com`）は変更なし
+
+---
+
 ## 2026-06-29
 
 ### AWS版 watsonx Orchestrate に対応

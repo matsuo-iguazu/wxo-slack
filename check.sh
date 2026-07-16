@@ -19,7 +19,7 @@ if echo "${INSTANCE_URL}" | grep -q "watson-orchestrate.cloud.ibm.com"; then
   echo "(IBM Cloud IAM)"
 else
   export TOKEN=$(curl -s -X POST \
-    "https://iam.platform.saas.ibm.com/siusermgr/api/1.0/apikeys/token" \
+    "https://account-iam.platform.saas.ibm.com/api/2.0/apikeys/token" \
     -H "Content-Type: application/json" \
     -H "accept: application/json" \
     -d "{\"apikey\": \"${WXO_API_KEY}\"}" \
