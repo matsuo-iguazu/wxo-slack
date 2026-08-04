@@ -83,6 +83,7 @@ chmod +x register.sh
 | `Unauthorized` エラー | `WXO_API_KEY` が正しいか、またはTOKENの有効期限切れ（`check.sh` を再実行） |
 | ENVIRONMENT_IDが取得できない | Draftの場合、エージェントにSlackチャネル定義が存在するか確認 |
 | Slackで返答が来ない | `register.sh` のPATCHが成功しているか確認 |
+| `register.sh` 成功後もSlackで返答が来ない | api.slack.com → アプリ → Socket Mode が **無効** になっているか確認。有効になっているとイベントがwxOに届かない |
 | LangFuseにエントリが来ない | bot_access_tokenが未登録の可能性あり（`register.sh` を再実行） |
 
 ---
